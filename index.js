@@ -6,9 +6,9 @@ const PORT = process.env.PORT || 5000
 var fs = require('fs');
 var util = require('util');
 var d = new Date();
-var suffix = [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-')
+var suffix = [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-');
 
-var log_file = fs.createWriteStream((path.join(__dirname, 'public') + '/q1-'+suffix+'.log', {flags : 'w'});
+var log_file = fs.createWriteStream((path.join(__dirname, 'public') + '/q1-' + suffix + '.log', {flags : 'w'}));
 // var log_stdout = process.stdout;
 
 
