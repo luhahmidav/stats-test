@@ -2,8 +2,6 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
-const sendmail = require('sendmail')();
-
 var fs = require('fs');
 var util = require('util');
 var send = require('gmail-send')({
