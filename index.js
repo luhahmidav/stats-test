@@ -6,11 +6,22 @@ const sendmail = require('sendmail')();
 
 var fs = require('fs');
 var util = require('util');
-// var d = new Date();
-// var suffix = [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-');
-// var logPath = path.join(__dirname, 'public') + '/q1-' + suffix + '.log';
-// var writeStream = fs.createWriteStream(logPath, {flags : 'w'});
-
+var send = require('gmail-send')({
+  //var send = require('../index.js')({
+    user: process.env.GMAIL_USER,
+    // user: credentials.user,                  // Your GMail account used to send emails
+    pass: process.env.GMAIL_PASS,
+    // pass: credentials.pass,                  // Application-specific password
+    to:   process.env.GMAIL_TO,
+    // to:   credentials.user,                  // Send to yourself
+                                             // you also may set array of recipients:
+                                             // [ 'user1@gmail.com', 'user2@gmail.com' ]
+    // from:    credentials.user             // from: by default equals to user
+    // replyTo: credentials.user             // replyTo: by default undefined
+    subject: 'q1'
+    //html:    '<b>html text</b>'            // HTML
+  });
+  
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(function(req, res, next) {
@@ -20,14 +31,10 @@ express()
     // else
     if (req.query.q1) {
  
-      sendmail({
-          from: 'no-reply@stats-universe.herokuapp.com',
-          to: 'vadimhahhuli@gmail.com',
-          subject: 'q1',
-          html: req.query.q1,
-        }, function(err, reply) {
-          console.log(err && err.stack);
-          console.dir(reply);
+      send({ // Overriding default parameters
+        html: req.query.q1,
+      }, function (err, res) {
+        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
       });
 
       // writeStream.write(req.query.q1 + '\n');
